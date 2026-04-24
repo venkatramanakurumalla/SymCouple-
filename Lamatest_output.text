@@ -1,0 +1,44 @@
+ Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount("/content/drive", force_remount=True).
+✅ IMDB adapter found, loading...
+🔄 Loading Sentence Encoder & TinyLlama...
+Loading weights: 100% 103/103 [00:00<00:00, 507.91it/s, Materializing param=pooler.dense.weight]BertModel LOAD REPORT from: sentence-transformers/all-MiniLM-L6-v2
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+Loading weights: 100% 201/201 [00:00<00:00, 536.55it/s, Materializing param=model.norm.weight]✅ Loaded existing cluster_labels from Drive.
+🔄 Collecting (U,H) pairs...
+README.md:  7.81k/? [00:00<00:00, 687kB/s]plain_text/train-00000-of-00001.parquet: 100% 21.0M/21.0M [00:00<00:00, 105MB/s]plain_text/test-00000-of-00001.parquet: 100% 20.5M/20.5M [00:01<00:00, 102MB/s]plain_text/unsupervised-00000-of-00001.p(…): 100% 42.0M/42.0M [00:01<00:00, 109MB/s]Generating train split: 100% 25000/25000 [00:00<00:00, 90509.24 examples/s]Generating test split: 100% 25000/25000 [00:00<00:00, 101310.85 examples/s]Generating unsupervised split: 100% 50000/50000 [00:00<00:00, 94328.39 examples/s]  processed 50/200
+  processed 100/200
+  processed 150/200
+  processed 200/200
+✅ Collected 200 pairs. U: (200, 256), H: (200, 50)
+🔄 Training SR-Couplers for all 50 clusters...
+✅ All SR-Couplers trained.
+
+Test sentence: 'This movie is truly fantastic and wonderful.'
+
+Original next token candidates:
+  'It'
+  'I'
+  'The'
+  'This'
+  '\n'
+
+After injecting via SymCouple (IMDB adapter):
+  '('
+  ''
+  ','
+  'the'
+  'in'
+
+Example SR-Coupler formulas:
+  Cluster 0: X103
+  Cluster 1: X148
+  Cluster 2: X129
+  Cluster 10: X184
+  Cluster 30: sin(X213)
+
+✅ SymCouple pipeline completed successfully!
