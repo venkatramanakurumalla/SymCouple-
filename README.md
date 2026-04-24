@@ -62,6 +62,8 @@ All experiments use **one universal sentiment adapter** trained on IMDB (5k samp
 git clone https://github.com/venkatramanakurumalla/SymCouple.git
 cd SymCouple
 pip install -r requirements.txt
+
+###citation
 @software{kurumalla2026symcouple,
   author       = {VenkataRamana Kurumalla},
   title        = {SymCouple: Autonomous Symbolic Couplers for Cross-Architecture PEFT},
