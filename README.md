@@ -2,44 +2,73 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19725634.svg)](https://doi.org/10.5281/zenodo.19725634)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/YOUR-USERNAME/SymCouple/blob/main/notebooks/demo_all_models.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1UkwTpCl2w2B87dbAyxg_0gyUfoAuwe7c)
 
-**Train Once, Run Anywhere** – Adapt a single task‑specific Universal Adapter to any language model using **human‑readable symbolic equations**.
-
-SymCouple introduces a novel **Parameter‑Efficient Fine‑Tuning (PEFT)** paradigm that decouples task learning from model‑specific routing. Instead of retraining adapters for each model, we use **Symbolic Regression** to discover ultra‑lightweight mathematical formulas (SR‑Couplers) that translate a fixed‑size universal representation into any model’s hidden space – enabling **zero‑shot cross‑architecture transfer** with interpretability and minimal storage.
+**Train Once, Run Anywhere** – A novel parameter‑efficient fine‑tuning paradigm that decouples task‑specific learning from model‑specific routing through **autonomously discovered symbolic equations**.
 
 ---
 
-## 🧠 How It Works
+## Overview
 
-1. **Phase 1 – Universal Adapter**  
-   A small neural module (e.g., a linear projection over a frozen Sentence‑BERT encoder) is trained once on a downstream task (sentiment analysis) and compresses any input text into a 256‑dimensional *universal vector* **U**.
+Modern large language models (LLMs) demand lightweight adaptation methods. Existing approaches like LoRA are **architecture‑locked**: an adapter trained for one hidden dimension cannot be transferred to another model without retraining. **SymCouple** overcomes this by introducing a two‑component adapter:
 
-2. **Phase 2 – Data Collection**  
-   For a new target LLM (TinyLlama, GPT‑2, Qwen2.5, …), we collect pairs of **(U**, cluster‑means of the model’s last‑layer hidden state) using a small calibration set.
+1. **Universal Adapter** – a task‑aware module that maps any input text to a fixed‑size *universal representation* **U** (dₖ = 256). It is trained **once** on the target task (e.g., sentiment analysis) and never modified thereafter.
+2. **SR‑Coupler** – an ultra‑lightweight translation layer discovered via **Symbolic Regression**. For any base LLM, it learns an explicit, human‑readable mathematical formula that projects **U** into the model’s hidden‑state clusters, enabling instantaneous task steering without gradient updates.
 
-3. **Phase 3 – SR‑Coupler Discovery**  
-   An off‑the‑shelf symbolic regression engine (gplearn) fits an explicit mathematical formula for each functional cluster:  
+This *“symbolic coupler”* reduces adaptation to a few minutes of formula discovery, requires only kilobytes of storage, and provides full **interpretability** – the coupling rules are readable algebraic expressions.
+
+---
+
+## How SymCouple Works
+
+1. **Phase 1 – Train the Universal Adapter**  
+   A small projection head (Linear → ReLU → Dropout) is placed atop a frozen Sentence‑BERT encoder and trained on a downstream dataset. It outputs a 256‑dimensional vector **U** that encodes task‑relevant information.
+
+2. **Phase 2 – Collect (U, H) Pairs**  
+   For a new target model, a calibration set is used to simultaneously obtain **U** (from the universal adapter) and the **cluster‑wise means** of the model’s last‑layer hidden states. A simple K‑Means grouping (e.g., 50 clusters) is applied to the hidden dimensions beforehand.
+
+3. **Phase 3 – Discover the SR‑Coupler**  
+   Symbolic regression (using `gplearn`) fits an arithmetic expression for each cluster:  
    `H_cluster_i = f_i(U)`  
-   *Examples: `div(X114, sub(X124, X94))`, `sin(X213)`, `X129`*
+   Typical formulas look like:  
+   - `div(X114, sub(X124, X94))`  
+   - `sin(X213)`  
+   - `add(X103, mul(X7, -0.234))`
 
 4. **Inference‑time Injection**  
-   During generation, the universal vector is computed for the input text, the SR‑Coupler predicts target cluster values, and the model’s hidden state is overwritten accordingly – **steering the output without any gradient steps**.
+   Given a new input, **U** is computed, the SR‑Coupler predicts new hidden cluster means, and the model’s hidden state is overwritten – the LLM is steered to reflect the task without any fine‑tuning.
 
 ---
 
-## 📊 Cross‑Architecture Transfer (Same Sentiment Adapter)
+## Cross‑Architecture Transfer Results
 
-All experiments use **one universal sentiment adapter** trained on IMDB (5k samples).  
-The SR‑Couplers are fitted with only **200 text pairs** and **5 generations** of symbolic regression.
+All experiments use **one universal sentiment adapter** trained on IMDB (5k samples) and **200 calibration pairs** per model. The SR‑Couplers are discovered with only 5 generations of symbolic regression.
 
-| Model (hidden size)        | Original Top‑5                       | Injected Top‑5                  | Example Formula                      |
-|----------------------------|--------------------------------------|---------------------------------|--------------------------------------|
-| **TinyLlama‑1.1B** (2048)  | `'It' 'I' 'The' 'This' '\n'`        | `'(' '' ',' 'the' 'in'`         | `X103`, `sin(X213)`                  |
-| **GPT‑2 small** (768)      | `' I' ' It' ' The' '\n' ' There'`    | `',' ' and' ' in' ' the' ' to'` | `X129`, `X184`                       |
-| **Qwen2.5‑0.5B** (896)     | `' I' ' It' ' The' ' This' ' There'` | `' the' ' ' ' in' ' a' ' and'`  | `div(X114, sub(X124, X94))`          |
+| Model (Hidden Dim)        | Original Top‑5                      | Injected Top‑5                     | Example Coupler Formula |
+|----------------------------|-------------------------------------|------------------------------------|--------------------------|
+| **TinyLlama‑1.1B** (2048)  | `'It' 'I' 'The' 'This' '\n'`        | `'(' '' ',' 'the' 'in'`            | `X103`, `sin(X213)`      |
+| **GPT‑2 small** (768)      | `' I' ' It' ' The' '\n' ' There'`    | `',' ' and' ' in' ' the' ' to'`    | `X129`, `X184`           |
+| **Qwen2.5‑0.5B** (896)     | `' I' ' It' ' The' ' This' ' There'`  | `' the' ' ' ' in' ' a' ' and'`     | `div(X114, sub(X124, X94))` |
 
-✅ **No retraining of the adapter** – only a few minutes of SR‑Coupler discovery per model.
+✅ **Zero retraining of the universal adapter** – only a few minutes of SR‑Coupler discovery per architecture.
 
 ---
+---
+
+## Quick Start
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/venkatramanakurumalla/SymCouple.git
+cd SymCouple
+pip install -r requirements.txt
+@software{kurumalla2026symcouple,
+  author       = {VenkataRamana Kurumalla},
+  title        = {SymCouple: Autonomous Symbolic Couplers for Cross-Architecture PEFT},
+  month        = apr,
+  year         = 2026,
+  publisher    = {Zenodo},
+  doi          = {10.5281/zenodo.19725634},
+  url          = {https://doi.org/10.5281/zenodo.19725634}
+}
 
