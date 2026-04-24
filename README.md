@@ -1,6 +1,6 @@
 # SymCouple: Autonomous Symbolic Couplers for Cross-Architecture PEFT
 
-[![DOI](https://zenodo.org/badge/DOI/YOUR-ZENODO-DOI.svg)](https://doi.org/YOUR-ZENODO-DOI)
+[![DOI](https://zenodo.org/badge/DOI/YOUR-ZENODO-DOI.svg)]()https://doi.org/10.5281/zenodo.19725634
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **Train Once, Run Anywhere** – adapt a single task-aware Universal Adapter to any language model using human-readable symbolic equations.
