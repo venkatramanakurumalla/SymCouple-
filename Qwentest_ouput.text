@@ -1,0 +1,45 @@
+ Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount("/content/drive", force_remount=True).
+✅ IMDB Universal Adapter loaded.
+Loading weights: 100% 103/103 [00:00<00:00, 525.58it/s, Materializing param=pooler.dense.weight]BertModel LOAD REPORT from: sentence-transformers/all-MiniLM-L6-v2
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+config.json: 100% 681/681 [00:00<00:00, 48.4kB/s]tokenizer_config.json:  7.23k/? [00:00<00:00, 620kB/s]vocab.json:  2.78M/? [00:00<00:00, 45.8MB/s]merges.txt:  1.67M/? [00:00<00:00, 41.3MB/s]tokenizer.json:  7.03M/? [00:00<00:00, 99.6MB/s]model.safetensors: 100% 988M/988M [00:06<00:00, 273MB/s]Loading weights: 100% 290/290 [00:00<00:00, 501.13it/s, Materializing param=model.norm.weight]generation_config.json: 100% 138/138 [00:00<00:00, 7.00kB/s]✅ Qwen/Qwen2.5-0.5B loaded. Hidden size: 896
+🔄 Creating new cluster labels for Qwen2.5...
+✅ Qwen2.5 cluster labels saved.
+🔄 Collecting (U, H) pairs for Qwen2.5...
+  processed 50/200
+  processed 100/200
+  processed 150/200
+  processed 200/200
+✅ Collected 200 pairs. U: (200, 256), H: (200, 50)
+🔄 Training SR-Couplers for Qwen2.5...
+✅ All SR-Couplers trained.
+
+Test sentence: 'This movie is truly fantastic and wonderful.'
+
+Original next token candidates (Qwen2.5):
+  ' I'
+  ' It'
+  ' The'
+  ' This'
+  ' There'
+
+After injecting SymCouple (same IMDB adapter, Qwen2.5):
+  ' the'
+  ' '
+  ' in'
+  ' a'
+  ' and'
+
+Example SR-Coupler formulas for Qwen2.5:
+  Cluster 0: div(X114, sub(X124, X94))
+  Cluster 1: mul(cos(div(div(X70, X117), X50)), div(sub(cos(cos(cos(log(sub(sub(cos(X57), log(X1)), sin(div(X125, X142))))))), mul(X221, X208)), cos(sin(X50))))
+  Cluster 2: X129
+  Cluster 10: X184
+  Cluster 30: div(X199, X68)
+
+✅ Cross‑architecture injection with Qwen2.5 completed!
