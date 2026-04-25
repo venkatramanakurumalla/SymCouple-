@@ -1,0 +1,32 @@
+--- INITIATING PCA BENCHMARK SUITE ---
+
+[TEST 1] IN-DISTRIBUTION ACCURACY (IMDB Sentiment N=40)
+PCA SYMCUPLE SEMANTIC ACCURACY: 62.5%
+(Baseline to beat: 65.0%)
+
+[TEST 2] OUT-OF-DISTRIBUTION LATENT STABILITY
+
+OOD Prompt: The core principle of quantum entanglement is
+Injected Math Token: ' downward' (Confidence: 100.00%)
+Generated Continuation:  downward causation, which means that the state of one particle cannot be directly observed
+
+OOD Prompt: During the Renaissance, the most famous artists
+Injected Math Token: ' downward' (Confidence: 100.00%)
+Generated Continuation:  downward was Leonardo da Vinci. He is considered as one of the greatest painters in
+
+OOD Prompt: The mitochondria is known as the powerhouse of the
+Injected Math Token: ' downward' (Confidence: 100.00%)
+Generated Continuation:  downward process, and it can only be activated under which condition?
+A. Low
+
+OOD Prompt: In object-oriented programming, inheritance allows
+Injected Math Token: ' downward' (Confidence: 100.00%)
+Generated Continuation:  downward and upward communication between classes. Which of the following statements about class composition is
+
+OOD Prompt: The gravitational pull of a black hole is so strong that
+Injected Math Token: ' downward' (Confidence: 100.00%)
+Generated Continuation:  downward motion in the vicinity can be considered as uniform circular motion. If an object
+
+============================================================
+OOD AVERAGE CONFIDENCE: 100.00%
+============================================================
