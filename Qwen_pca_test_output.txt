@@ -1,0 +1,36 @@
+ Mounted at /content/drive
+🔄 Loading Models and Adapter...
+Loading weights: 100% 103/103 [00:00<00:00, 518.92it/s, Materializing param=pooler.dense.weight]BertModel LOAD REPORT from: sentence-transformers/all-MiniLM-L6-v2
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+Loading weights: 100% 290/290 [00:00<00:00, 781.69it/s, Materializing param=model.norm.weight]✅ Models Loaded.
+
+🔄 Generating Calibration Data for PCA...
+🔄 Training PCA (Compressing 896 dims -> 64 continuous components)...
+✅ PCA Trained. Explained Variance: 96.78%
+
+🔄 Collecting (U, H) pairs for PCA Mapping...
+  processed 100/500
+  processed 200/500
+  processed 300/500
+  processed 400/500
+  processed 500/500
+
+🔄 Training 64 High-Fidelity SR-Couplers...
+  trained 16/64 math bridges...
+  trained 32/64 math bridges...
+  trained 48/64 math bridges...
+  trained 64/64 math bridges...
+✅ All PCA SR-Couplers trained.
+
+--- INITIATING HIGH-FIDELITY INJECTION ---
+Test sentence: 'This movie is truly fantastic and wonderful.'
+
+============================================================
+Injected Math Token: ','
+Autoregressive Output: , it's a great comedy that has the perfect balance of humor with some good heart. I've seen this film twice in my
+============================================================
