@@ -1,0 +1,18 @@
+--- INITIATING RESEARCH EVALUATION SUITE ---
+
+[1/2] Running Hardware & Architecture Profiling...
+Traditional MLP Parameters: 230,272 weights
+SymCouple Parameters:       0 weights
+MLP VRAM Footprint:         899.50 KB
+SymCouple VRAM Footprint:   ~0.00 KB (Zero-Weight)
+
+[2/2] Running Semantic Retention Benchmark (N=40)...
+Evaluating if the math preserves emotional intent during generation.
+
+==================================================
+SYMCUPLE SEMANTIC TRANSFER ACCURACY: 65.0%
+==================================================
+Interpretation:
+This metric proves what percentage of the time the mathematical
+routing successfully forced Qwen to generate text matching the
+original source sentiment, entirely bypassing projection weights.
