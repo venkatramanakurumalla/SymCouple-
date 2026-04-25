@@ -1,0 +1,54 @@
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 40.3/40.3 kB 3.9 MB/s eta 0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.9/8.9 MB 13.7 MB/s eta 0:00:00
+Mounted at /content/drive
+✅ IMDB Universal Adapter loaded.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+modules.json: 100% 349/349 [00:00<00:00, 32.1kB/s]config_sentence_transformers.json: 100% 116/116 [00:00<00:00, 13.2kB/s]README.md:  10.5k/? [00:00<00:00, 1.03MB/s]sentence_bert_config.json: 100% 53.0/53.0 [00:00<00:00, 5.92kB/s]config.json: 100% 612/612 [00:00<00:00, 70.2kB/s]model.safetensors: 100% 90.9M/90.9M [00:01<00:00, 208MB/s]Loading weights: 100% 103/103 [00:00<00:00, 516.94it/s, Materializing param=pooler.dense.weight]BertModel LOAD REPORT from: sentence-transformers/all-MiniLM-L6-v2
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+tokenizer_config.json: 100% 350/350 [00:00<00:00, 40.7kB/s]vocab.txt:  232k/? [00:00<00:00, 11.2MB/s]tokenizer.json:  466k/? [00:00<00:00, 21.4MB/s]special_tokens_map.json: 100% 112/112 [00:00<00:00, 6.92kB/s]config.json: 100% 190/190 [00:00<00:00, 13.9kB/s]config.json: 100% 681/681 [00:00<00:00, 43.9kB/s]tokenizer_config.json:  7.23k/? [00:00<00:00, 492kB/s]vocab.json:  2.78M/? [00:00<00:00, 56.9MB/s]merges.txt:  1.67M/? [00:00<00:00, 37.5MB/s]tokenizer.json:  7.03M/? [00:00<00:00, 74.3MB/s]model.safetensors: 100% 988M/988M [00:07<00:00, 105MB/s]Loading weights: 100% 290/290 [00:00<00:00, 650.22it/s, Materializing param=model.norm.weight]generation_config.json: 100% 138/138 [00:00<00:00, 7.83kB/s]✅ Qwen/Qwen2.5-0.5B loaded. Hidden size: 896
+✅ Loaded HIGH-RES Qwen2.5 cluster labels.
+🔄 Collecting HIGH-VOLUME (U, H) pairs...
+README.md:  7.81k/? [00:00<00:00, 548kB/s]plain_text/train-00000-of-00001.parquet: 100% 21.0M/21.0M [00:00<00:00, 105MB/s]plain_text/test-00000-of-00001.parquet: 100% 20.5M/20.5M [00:00<00:00, 102MB/s]plain_text/unsupervised-00000-of-00001.p(…): 100% 42.0M/42.0M [00:00<00:00, 210MB/s]Generating train split: 100% 25000/25000 [00:00<00:00, 87464.66 examples/s]Generating test split: 100% 25000/25000 [00:00<00:00, 150784.15 examples/s]Generating unsupervised split: 100% 50000/50000 [00:00<00:00, 149589.21 examples/s]  processed 250/1000
+  processed 500/1000
+  processed 750/1000
+  processed 1000/1000
+✅ Collected 1000 pairs. U: (1000, 256), H: (1000, 150)
+🔄 Training 150 High-Complexity SR-Couplers (This will take a few minutes)...
+  trained 25/150 math bridges...
+  trained 50/150 math bridges...
+  trained 75/150 math bridges...
+  trained 100/150 math bridges...
+  trained 125/150 math bridges...
+  trained 150/150 math bridges...
+✅ All High-Complexity SR-Couplers trained.
+
+Test sentence: 'This movie is truly fantastic and wonderful.'
+
+Original next token candidates (Qwen2.5):
+  ' I'
+  ' It'
+  ' The'
+  ' This'
+  ' There'
+
+After injecting HIGH-RES SymCouple:
+  ' the'
+  ' a'
+  ' one'
+  ' in'
+  ' more'
+
+Example Unleashed Math Formulas:
+  Cluster 0: sin(mul(mul(X212, X74), 0.675))
+  Cluster 10: sin(mul(cos(sin(X74)), log(X147)))
+  Cluster 50: mul(log(-0.934), cos(X232))
+  Cluster 100: sub(log(div(div(X227, sin(X51)), log(div(X227, div(X160, X76))))), add(sin(X157), sin(X131)))
+  Cluster 149: mul(X60, X159)
+
+✅ HIGH-RESOLUTION RUN COMPLETED!
